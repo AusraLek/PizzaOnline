@@ -14,7 +14,9 @@ namespace PizzaOnline.Data
         }
 
         public virtual DbSet<OrderEntity> Orders { get; set; }
+
         public virtual DbSet<PizzaSizeEntity> Sizes { get; set; }
+
         public virtual DbSet<PizzaToppingsEntity> Toppings { get; set; }
     }
 }

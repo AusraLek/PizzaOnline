@@ -22,8 +22,13 @@ namespace PizzaOnline.Controllers
         [HttpGet("info")]
         public PizzaInfo Info()
         {
-            var sizes = this.context.Sizes.Select(item => item.Size).ToArray();
-            var toppings = this.context.Toppings.Select(item => item.Topping).ToArray();
+            var sizes = this.context.Sizes
+                .Select(item => item.Size)
+                .ToArray();
+
+            var toppings = this.context.Toppings
+                .Select(item => item.Topping)
+                .ToArray();
 
             return new PizzaInfo
             {
@@ -56,7 +61,9 @@ namespace PizzaOnline.Controllers
         [HttpGet("orders")]
         public IEnumerable<OrderEntity> Orders()
         {
-            return this.context.Orders.OrderByDescending(item => item.Timestamp).ToArray();
+            return this.context.Orders
+                .OrderByDescending(item => item.Timestamp)
+                .ToArray();
         }
     }
 }

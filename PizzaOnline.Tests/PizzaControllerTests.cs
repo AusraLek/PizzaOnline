@@ -7,7 +7,6 @@ using PizzaOnline.Data;
 using PizzaOnline.Data.Entities;
 using PizzaOnline.Logic;
 using PizzaOnline.Models;
-using System.Reflection.Metadata;
 
 namespace PizzaOnline.Tests
 {
@@ -29,13 +28,15 @@ namespace PizzaOnline.Tests
         public void PizzaInfoFromDatabase()
         {
             //Arrange
-            this.context.Setup<DbSet<PizzaSizeEntity>>(mock => mock.Sizes)
+            this.context
+                .Setup<DbSet<PizzaSizeEntity>>(mock => mock.Sizes)
                 .ReturnsDbSet(new[] {
                     new PizzaSizeEntity { Size = "TestSize", Price = 8 },
                     new PizzaSizeEntity { Size = "SizeAbc", Price = 7 },
                 });
 
-            this.context.Setup<DbSet<PizzaToppingsEntity>>(mock => mock.Toppings)
+            this.context
+                .Setup<DbSet<PizzaToppingsEntity>>(mock => mock.Toppings)
                 .ReturnsDbSet(new[] {
                     new PizzaToppingsEntity { Topping = "Topping1", Price = 1  },
                     new PizzaToppingsEntity { Topping = "Topping2", Price = 1  },
@@ -61,7 +62,9 @@ namespace PizzaOnline.Tests
         {
             //Arrange
             var mockSet = new Mock<DbSet<OrderEntity>>();
-            this.context.Setup(mock => mock.Orders).Returns(mockSet.Object);
+            this.context
+                .Setup(mock => mock.Orders)
+                .Returns(mockSet.Object);
 
             var testOrder = new Order 
             {
@@ -73,16 +76,17 @@ namespace PizzaOnline.Tests
             this.controller.Order(testOrder);
 
             //Assert
-            mockSet.Verify(m => m.Add(It.IsAny<OrderEntity>()), Times.Once());
-            this.context.Verify(m => m.SaveChanges(), Times.Once());
-            this.calculator.Verify(m => m.CalculateTotalPrice(It.IsAny<Order>()), Times.Once());
+            mockSet.Verify(mock => mock.Add(It.IsAny<OrderEntity>()), Times.Once());
+            this.context.Verify(mock => mock.SaveChanges(), Times.Once());
+            this.calculator.Verify(mock => mock.CalculateTotalPrice(It.IsAny<Order>()), Times.Once());
         }
 
         [TestMethod]
         public void CalculatePrice()
         {
             //Arrange
-            this.calculator.Setup(mock => mock.CalculateTotalPrice(It.IsAny<Order>()))
+            this.calculator
+                .Setup(mock => mock.CalculateTotalPrice(It.IsAny<Order>()))
                 .Returns(12345.6789);
 
             var testOrder = new Order
@@ -99,7 +103,7 @@ namespace PizzaOnline.Tests
                 .Should()
                 .Be(12345.6789);
 
-            this.calculator.Verify(m => m.CalculateTotalPrice(It.IsAny<Order>()), Times.Once());
+            this.calculator.Verify(mock => mock.CalculateTotalPrice(It.IsAny<Order>()), Times.Once());
         }
 
         [TestMethod]
@@ -112,7 +116,9 @@ namespace PizzaOnline.Tests
                 new OrderEntity(),
                 new OrderEntity(),
             };
-            this.context.Setup<DbSet<OrderEntity>>(mock => mock.Orders)
+
+            this.context
+                .Setup<DbSet<OrderEntity>>(mock => mock.Orders)
                 .ReturnsDbSet(testOrders);
 
             //Act

@@ -32,10 +32,12 @@ namespace PizzaOnline.Tests
             double expectedResult)
         {
             // Arrange
-            this.context.Setup<DbSet<PizzaSizeEntity>>(mock => mock.Sizes)
+            this.context
+                .Setup<DbSet<PizzaSizeEntity>>(mock => mock.Sizes)
                 .ReturnsDbSet(new[] { new PizzaSizeEntity { Size = "TestSize", Price = sizePrice } });
 
-            this.context.Setup<DbSet<PizzaToppingsEntity>>(mock => mock.Toppings)
+            this.context
+                .Setup<DbSet<PizzaToppingsEntity>>(mock => mock.Toppings)
                 .ReturnsDbSet(new[] {
                     new PizzaToppingsEntity { Topping = "Topping1", Price = topping1Price  },
                     new PizzaToppingsEntity { Topping = "Topping2", Price = topping2Price  },
@@ -60,10 +62,12 @@ namespace PizzaOnline.Tests
         public void ApplyDiscount()
         {
             // Arrange
-            this.context.Setup<DbSet<PizzaSizeEntity>>(mock => mock.Sizes)
+            this.context
+                .Setup<DbSet<PizzaSizeEntity>>(mock => mock.Sizes)
                 .ReturnsDbSet(new[] { new PizzaSizeEntity { Size = "TestSize", Price = 8 } });
 
-            this.context.Setup<DbSet<PizzaToppingsEntity>>(mock => mock.Toppings)
+            this.context
+                .Setup<DbSet<PizzaToppingsEntity>>(mock => mock.Toppings)
                 .ReturnsDbSet(new[] {
                     new PizzaToppingsEntity { Topping = "Topping1", Price = 1  },
                     new PizzaToppingsEntity { Topping = "Topping2", Price = 1  },

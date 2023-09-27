@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PizzaOnline.Data;
+﻿using PizzaOnline.Data;
 using PizzaOnline.Models;
 
 namespace PizzaOnline.Logic
@@ -15,8 +14,13 @@ namespace PizzaOnline.Logic
 
         public double CalculateTotalPrice(Order order)
         {
-            var sizePrice = this.context.Sizes.Where(item => item.Size == order.SelectedSize).FirstOrDefault();
-            var toppingsPrice = this.context.Toppings.Where(item => order.SelectedToppings.Contains(item.Topping)).ToArray();
+            var sizePrice = this.context.Sizes
+                .Where(item => item.Size == order.SelectedSize)
+                .FirstOrDefault();
+
+            var toppingsPrice = this.context.Toppings
+                .Where(item => order.SelectedToppings.Contains(item.Topping))
+                .ToArray();
 
             var totalPrice = sizePrice.Price + toppingsPrice.Select(item => item.Price).Sum();
 
